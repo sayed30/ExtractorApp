@@ -1,6 +1,6 @@
 "use client";
 
-import { ExtractionPayload } from "@/lib/api";
+import { ExtractionPayload } from "../lib/api";
 
 export default function LineItemsTable({
   items,

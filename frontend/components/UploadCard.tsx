@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { uploadDocument } from "@/lib/api";
+import { uploadDocument } from "../lib/api";
 
 export default function UploadCard({
   onJobCreated

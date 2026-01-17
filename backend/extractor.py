@@ -1,38 +1,44 @@
-import pdfplumber
 import json
 import os
-import openai
+import pdfplumber
+from openai import OpenAI
 from schema import INVOICE_SCHEMA
 
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
-# Load environment variables from .env
-load_dotenv()
-
-openai.api_key = os.getenv("OPENAI_API_KEY")
-
-if not openai.api_key:
-    raise ValueError("OPENAI_API_KEY not found in environment variables")
-
-def extract_invoice(path):
+def extract_invoice(path: str):
+    # Extract text from PDF
     text = ""
-    with pdfplumber.open(path) as pdf:
-        for page in pdf.pages:
-            text += page.extract_text() or ""
+    if path.lower().endswith(".pdf"):
+        with pdfplumber.open(path) as pdf:
+            for page in pdf.pages:
+                text += (page.extract_text() or "") + "\n"
+    else:
+        # If you upload images, you can extend this to OCR/vision later.
+        # For now, treat it as empty text and rely on your image pipeline if you add it.
+        text = ""
 
     prompt = f"""
 You are an invoice extraction engine.
-Return ONLY valid JSON following this schema:
+Return ONLY valid JSON following this schema (do not wrap in markdown):
 
 {json.dumps(INVOICE_SCHEMA, indent=2)}
+
+Rules:
+- Dates as YYYY-MM-DD if available
+- Money as numbers (no currency symbols)
+- SalesOrderDetail is an array of line items
+- If totals are missing, infer them if possible
 
 Invoice text:
 {text}
 """
 
-    response = openai.ChatCompletion.create(
-        model="gpt-4o",
+    resp = client.chat.completions.create(
+        model="gpt-4o-mini",
         messages=[{"role": "user", "content": prompt}],
-        temperature=0
+        temperature=0,
     )
 
-    return json.loads(response.choices[0].message.content)
+    content = resp.choices[0].message.content
+    return json.loads(content)

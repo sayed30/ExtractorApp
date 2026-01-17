@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ExtractionPayload, saveOrder } from "@/lib/api";
+import { ExtractionPayload, saveOrder } from "../lib/api";
 import LineItemsTable from "./LineItemsTable";
 
 export default function InvoiceEditor({ initial }: { initial: ExtractionPayload }) {
