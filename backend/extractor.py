@@ -1,9 +1,10 @@
 import json
 import os
 import pdfplumber
+import pytesseract
 from openai import OpenAI
 from schema import INVOICE_SCHEMA
-
+from PIL import Image
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 def extract_invoice(path: str):
@@ -13,11 +14,9 @@ def extract_invoice(path: str):
         with pdfplumber.open(path) as pdf:
             for page in pdf.pages:
                 text += (page.extract_text() or "") + "\n"
-    else:
-        # If you upload images, you can extend this to OCR/vision later.
-        # For now, treat it as empty text and rely on your image pipeline if you add it.
-        text = ""
-
+    elif path.lower().endswith((".png", ".jpg", ".jpeg")):
+        image = Image.open(path)
+        text = pytesseract.image_to_string(image)
     prompt = f"""
 You are an invoice extraction engine.
 Return ONLY valid JSON following this schema (do not wrap in markdown):

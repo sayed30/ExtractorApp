@@ -47,7 +47,7 @@ export default function UploadCard({
         <button className="btn" disabled={!file || uploading} onClick={onUpload}>
           {uploading ? "Uploading…" : "Upload & Extract"}
         </button>
-        <span className="kbd">Backend: 127.0.0.1:5000</span>
+        <span className="kbd">Backend: 127.0.0.1:5001</span>
       </div>
 
       {err && <p className="p" style={{ color: "#ff9c9c" }}>{err}</p>}
