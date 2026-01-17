@@ -1,12 +1,5 @@
-# Dependencies
-frontend/node_modules/
-
-# Environment variables (ANYWHERE)
+**/node_modules/
 **/.env
-
-# Builds
 dist/
 build/
-
-# OS junk
 .DS_Store
