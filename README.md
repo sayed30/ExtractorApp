@@ -46,7 +46,7 @@ cd backend
 python3 -m venv venv
 source venv/bin/activate
 
-pip install flask flask-cors openpyxl pdfplumber python-dotenv openai
+pip install flask flask-cors openpyxl pdfplumber python-dotenv openai pytesseract pillow
 Create .env file
 
 Create backend/.env:
