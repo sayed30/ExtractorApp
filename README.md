@@ -29,12 +29,6 @@ The app is designed to be demonstrated live, showing **before and after data ext
 
 ---
 
-## Project Structure
-
-
-
----
-
 ## Prerequisites
 
 - Python 3.10+
@@ -43,7 +37,7 @@ The app is designed to be demonstrated live, showing **before and after data ext
 
 ---
 
-## Backend Setup (Flask)
+## Backend and Frontend Setup
 
 ### 1. Create and activate a virtual environment
 
