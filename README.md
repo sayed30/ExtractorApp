@@ -36,7 +36,22 @@ The app is designed to be demonstrated live, showing **before and after data ext
 - OpenAI API key
 
 ---
-
+## Scaling Strategies (Future Improvements)
+1. Higher Volume & Performance
+* Offload extraction to async workers (Celery/RQ + Redis)
+* Non-blocking job queue for PDF processing
+* Horizontal scaling behind a load balancer
+* Request throttling and rate limits
+2. Production-Grade Database
+* Replace Excel with PostgreSQL
+* Normalize tables for header and line items
+* Add audit/version history for extracted data
+* Use migrations and constraints
+3. Additional Document Types
+* Document classification step (invoice, receipt, PO, etc.)
+* Schema-per-document-type routing
+* Field-level confidence scores
+---
 ## Backend and Frontend Setup
 
 ### 1. Create and activate a virtual environment
